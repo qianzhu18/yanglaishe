@@ -58,6 +58,23 @@ export default function SplashIntro() {
       var enterText = (cfg && cfg.intro && cfg.intro.enter) || 'enter'
       var nameText = (cfg && cfg.main && cfg.main.name) || ''
       var signText = (cfg && cfg.main && cfg.main.signature) || ''
+      var avatarLink = (cfg && cfg.main && cfg.main.avatar && cfg.main.avatar.link) || 'assets/avatar.jpg'
+      // Normalize avatar path under /intro/
+      if (avatarLink.indexOf('/') !== 0) avatarLink = '/intro/' + avatarLink
+
+      // Build menu items from config
+      var ul = (cfg && cfg.main && cfg.main.ul) || {}
+      function buildItem(key) {
+        var item = ul[key]
+        if (!item) return ''
+        var icon = item.icon ? 'icon icon-' + item.icon : 'icon'
+        var href = item.href || '#'
+        var text = item.text || ''
+        // mark blog links for intercept
+        var blogAttr = /blog\//i.test(href) ? ' data-intro-blog' : ''
+        return '<li><a href="' + href + '" aria-label="' + text + '"' + blogAttr + '><i class="' + icon + '"></i><span data-translate="' + text + '">' + text + '</span></a></li>'
+      }
+      var menuHtml = [buildItem('first'), buildItem('second'), buildItem('third'), buildItem('fourth')].join('')
       container.innerHTML = (
         '<div class="content content-intro">\n' +
         '  <div class="content-inner">\n' +
@@ -80,16 +97,11 @@ export default function SplashIntro() {
         '  <div id="card">\n' +
         '    <div class="card-inner fade">\n' +
         '      <header>\n' +
-        '        <img src="/intro/assets/avatar.jpg" width="100" height="100" alt="avatar">\n' +
+        '        <img src="' + avatarLink + '" width="100" height="100" alt="avatar">\n' +
         '        <h1 data-translate="name">' + nameText + '</h1>\n' +
         '        <h2 id="signature" data-translate="signature">' + signText + '</h2>\n' +
         '      </header>\n' +
-        '      <ul>\n' +
-        '        <li><a href="#" data-intro-blog aria-label="Blog"><i class="icon icon-bokeyuan"></i><span data-translate="Blog">Blog</span></a></li>\n' +
-        '        <li><a href="#" aria-label="About"><i class="icon icon-xiaolian"></i><span data-translate="About">About</span></a></li>\n' +
-        '        <li><a href="mailto:hi@example.com" aria-label="Email" target="_blank"><i class="icon icon-email"></i><span data-translate="Email">Email</span></a></li>\n' +
-        '        <li><a href="https://github.com" aria-label="Github" target="_blank"><i class="icon icon-github"></i><span data-translate="Github">Github</span></a></li>\n' +
-        '      </ul>\n' +
+        '      <ul>' + menuHtml + '</ul>\n' +
         '    </div>\n' +
         '  </div>\n' +
         '  <canvas class="grid-background" id="gridCanvas"></canvas>\n' +
