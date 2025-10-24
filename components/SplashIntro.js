@@ -53,9 +53,9 @@ export default function SplashIntro() {
     // Build intro DOM (based on HomePage dist/index.html intro section)
     const container = rootRef.current
     if (container) {
-      const titleText = cfg?.intro?.title || 'Welcome'
-      const subText = cfg?.intro?.subtitle || ''
-      const enterText = cfg?.intro?.enter || 'enter'
+      const titleText = (cfg && cfg.intro && cfg.intro.title) || 'Welcome'
+      const subText = (cfg && cfg.intro && cfg.intro.subtitle) || ''
+      const enterText = (cfg && cfg.intro && cfg.intro.enter) || 'enter'
       container.innerHTML = `
         <div class="content content-intro">
           <div class="content-inner">
@@ -78,14 +78,17 @@ export default function SplashIntro() {
       // Intercept enter click to close overlay
       const enter = container.querySelector('a.enter')
       const handleEnter = (e) => { e.preventDefault(); close() }
-      enter?.addEventListener('click', handleEnter)
-      cleanup.current.removeEnter = () => enter?.removeEventListener('click', handleEnter)
+      if (enter && enter.addEventListener) enter.addEventListener('click', handleEnter)
+      cleanup.current.removeEnter = () => { if (enter && enter.removeEventListener) enter.removeEventListener('click', handleEnter) }
     }
 
     // Provide globals expected by HomePage scripts
-    window.$ = (selector) => document.querySelector(selector)
-    const getOriginalContent = (selector) => window.$(selector)?.getAttribute('original-content')
-    window.subtitle = getOriginalContent?.('.content-subtitle') || ''
+    window.$ = function (selector) { return document.querySelector(selector) }
+    const getOriginalContent = function (selector) {
+      const el = window.$(selector)
+      return el && el.getAttribute ? el.getAttribute('original-content') : ''
+    }
+    window.subtitle = getOriginalContent('.content-subtitle') || ''
     window.signature = ''
     window.config = {
       SIM_RESOLUTION: 128,
@@ -116,47 +119,47 @@ export default function SplashIntro() {
     }
 
     // Dynamically load scripts in sequence
-    const loadScript = (src) => new Promise((resolve, reject) => {
-      const s = document.createElement('script')
-      s.src = src
-      s.async = true
-      s.onload = () => resolve(s)
-      s.onerror = reject
-      document.body.appendChild(s)
-    })
-
-    const seq = async () => {
-      try {
-        await loadScript('https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js')
-      } catch (_) {}
-      try { await loadScript('/intro/js/main.js') } catch (_) {}
-      try { await loadScript('/intro/js/background.js') } catch (_) {}
+    const loadScript = function (src) {
+      return new Promise(function (resolve, reject) {
+        const s = document.createElement('script')
+        s.src = src
+        s.async = true
+        s.onload = function () { resolve(s) }
+        s.onerror = reject
+        document.body.appendChild(s)
+      })
     }
-    seq()
+
+    ;(function () { // IIFE to avoid top-level await
+      loadScript('https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js')
+        .catch(function () {})
+        .then(function () { return loadScript('/intro/js/main.js').catch(function () {}) })
+        .then(function () { return loadScript('/intro/js/background.js').catch(function () {}) })
+    })()
 
     // Auto close fallback
     const duration = parseInt(process.env.NEXT_PUBLIC_INTRO_DURATION || '3500', 10)
-    const timer = window.setTimeout(() => close(), duration)
-    cleanup.current.clearTimer = () => window.clearTimeout(timer)
+    const timer = window.setTimeout(function () { close() }, duration)
+    cleanup.current.clearTimer = function () { window.clearTimeout(timer) }
 
     return () => {
-      cleanup.current.clearTimer?.()
-      cleanup.current.removeEnter?.()
-      cleanup.current.removeLink?.()
-      cleanup.current.restoreOverflow?.()
+      if (cleanup.current.clearTimer) cleanup.current.clearTimer()
+      if (cleanup.current.removeEnter) cleanup.current.removeEnter()
+      if (cleanup.current.removeLink) cleanup.current.removeLink()
+      if (cleanup.current.restoreOverflow) cleanup.current.restoreOverflow()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const close = () => {
     setFade(true)
-    window.setTimeout(() => {
+    window.setTimeout(function () {
       setShow(false)
       if (typeof window !== 'undefined') {
         window.sessionStorage.setItem(INTRO_ONCE_KEY, '1')
       }
-      cleanup.current.removeLink?.()
-      cleanup.current.restoreOverflow?.()
+      if (cleanup.current.removeLink) cleanup.current.removeLink()
+      if (cleanup.current.restoreOverflow) cleanup.current.restoreOverflow()
     }, 400)
   }
 
