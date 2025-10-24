@@ -53,33 +53,65 @@ export default function SplashIntro() {
     // Build intro DOM (based on HomePage dist/index.html intro section)
     const container = rootRef.current
     if (container) {
-      const titleText = (cfg && cfg.intro && cfg.intro.title) || 'Welcome'
-      const subText = (cfg && cfg.intro && cfg.intro.subtitle) || ''
-      const enterText = (cfg && cfg.intro && cfg.intro.enter) || 'enter'
-      container.innerHTML = `
-        <div class="content content-intro">
-          <div class="content-inner">
-            <canvas id="background"></canvas>
-            <div class="wrap fade">
-              <h2 class="content-title">${titleText}</h2>
-              <h3 class="content-subtitle" original-content="${subText}">&nbsp;</h3>
-              <a class="enter">${enterText}</a>
-              <div class="arrow arrow-1"></div>
-              <div class="arrow arrow-2"></div>
-            </div>
-          </div>
-          <div class="shape-wrap">
-            <svg class="shape" width="100%" height="100vh" preserveAspectRatio="none" viewBox="0 0 1440 800" xmlns:pathdata="http://www.codrops.com/">
-              <path d="M -44,-50 C -52.71,28.52 15.86,8.186 184,14.69 383.3,22.39 462.5,12.58 638,14 835.5,15.6 987,6.4 1194,13.86 1661,30.68 1652,-36.74 1582,-140.1 1512,-243.5 15.88,-589.5 -44,-50 Z" pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z"></path>
-            </svg>
-          </div>
-        </div>`
+      var titleText = (cfg && cfg.intro && cfg.intro.title) || 'Welcome'
+      var subText = (cfg && cfg.intro && cfg.intro.subtitle) || ''
+      var enterText = (cfg && cfg.intro && cfg.intro.enter) || 'enter'
+      var nameText = (cfg && cfg.main && cfg.main.name) || ''
+      var signText = (cfg && cfg.main && cfg.main.signature) || ''
+      container.innerHTML = (
+        '<div class="content content-intro">\n' +
+        '  <div class="content-inner">\n' +
+        '    <canvas id="background"></canvas>\n' +
+        '    <div class="wrap fade">\n' +
+        '      <h2 class="content-title">' + titleText + '</h2>\n' +
+        '      <h3 class="content-subtitle" original-content="' + subText + '">&nbsp;</h3>\n' +
+        '      <a class="enter">' + enterText + '</a>\n' +
+        '      <div class="arrow arrow-1"></div>\n' +
+        '      <div class="arrow arrow-2"></div>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '  <div class="shape-wrap">\n' +
+        '    <svg class="shape" width="100%" height="100vh" preserveAspectRatio="none" viewBox="0 0 1440 800" xmlns:pathdata="http://www.codrops.com/">\n' +
+        '      <path d="M -44,-50 C -52.71,28.52 15.86,8.186 184,14.69 383.3,22.39 462.5,12.58 638,14 835.5,15.6 987,6.4 1194,13.86 1661,30.68 1652,-36.74 1582,-140.1 1512,-243.5 15.88,-589.5 -44,-50 Z" pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z"></path>\n' +
+        '    </svg>\n' +
+        '  </div>\n' +
+        '</div>\n' +
+        '<div class="content content-main">\n' +
+        '  <div id="card">\n' +
+        '    <div class="card-inner fade">\n' +
+        '      <header>\n' +
+        '        <img src="/intro/assets/avatar.jpg" width="100" height="100" alt="avatar">\n' +
+        '        <h1 data-translate="name">' + nameText + '</h1>\n' +
+        '        <h2 id="signature" data-translate="signature">' + signText + '</h2>\n' +
+        '      </header>\n' +
+        '      <ul>\n' +
+        '        <li><a href="#" data-intro-blog aria-label="Blog"><i class="icon icon-bokeyuan"></i><span data-translate="Blog">Blog</span></a></li>\n' +
+        '        <li><a href="#" aria-label="About"><i class="icon icon-xiaolian"></i><span data-translate="About">About</span></a></li>\n' +
+        '        <li><a href="mailto:hi@example.com" aria-label="Email" target="_blank"><i class="icon icon-email"></i><span data-translate="Email">Email</span></a></li>\n' +
+        '        <li><a href="https://github.com" aria-label="Github" target="_blank"><i class="icon icon-github"></i><span data-translate="Github">Github</span></a></li>\n' +
+        '      </ul>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '  <canvas class="grid-background" id="gridCanvas"></canvas>\n' +
+        '</div>'
+      )
 
-      // Intercept enter click to close overlay
-      const enter = container.querySelector('a.enter')
-      const handleEnter = (e) => { e.preventDefault(); close() }
+      // Intercept enter click to proceed to main and then auto-close
+      var enter = container.querySelector('a.enter')
+      var handleEnter = function (e) {
+        e.preventDefault()
+        // Allow HomePage JS to animate into content-main, then close overlay
+        var endDelay = parseInt(process.env.NEXT_PUBLIC_INTRO_EXIT_AFTER_MAIN_MS || '1800', 10)
+        window.setTimeout(function () { close() }, endDelay)
+      }
       if (enter && enter.addEventListener) enter.addEventListener('click', handleEnter)
-      cleanup.current.removeEnter = () => { if (enter && enter.removeEventListener) enter.removeEventListener('click', handleEnter) }
+      cleanup.current.removeEnter = function () { if (enter && enter.removeEventListener) enter.removeEventListener('click', handleEnter) }
+
+      // Intercept the Blog link to directly reveal site
+      var blogLink = container.querySelector('[data-intro-blog]')
+      var handleBlog = function (e) { e.preventDefault(); close() }
+      if (blogLink && blogLink.addEventListener) blogLink.addEventListener('click', handleBlog)
+      cleanup.current.removeBlog = function () { if (blogLink && blogLink.removeEventListener) blogLink.removeEventListener('click', handleBlog) }
     }
 
     // Provide globals expected by HomePage scripts
@@ -145,6 +177,7 @@ export default function SplashIntro() {
     return () => {
       if (cleanup.current.clearTimer) cleanup.current.clearTimer()
       if (cleanup.current.removeEnter) cleanup.current.removeEnter()
+      if (cleanup.current.removeBlog) cleanup.current.removeBlog()
       if (cleanup.current.removeLink) cleanup.current.removeLink()
       if (cleanup.current.restoreOverflow) cleanup.current.restoreOverflow()
     }
