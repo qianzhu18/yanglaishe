@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "installCommand": "npm ci",
+  "installCommand": "npm i -g npm@9 && npm ci",
   "buildCommand": "npm run build",
   "build": {
     "env": {
