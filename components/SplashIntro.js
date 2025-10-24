@@ -209,28 +209,33 @@ export default function SplashIntro() {
   }
 
   if (!show) return null
-  return (
-    <div
-      onClick={close}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: '#0b0b0c',
-        zIndex: 9999,
-        opacity: fade ? 0 : 1,
-        transition: 'opacity .4s ease'
-      }}
-    >
-      <div
-        ref={rootRef}
-        onClick={(e) => e.stopPropagation()}
-        style={{ width: '100%', height: '100%' }}
-      />
-      <button
-        onClick={(e) => { e.stopPropagation(); close() }}
-        style={{ position: 'absolute', top: 16, right: 16, zIndex: 10000, background: 'rgba(0,0,0,.5)', color: '#fff', border: '1px solid #555', borderRadius: 6, padding: '6px 10px', cursor: 'pointer' }}
-        aria-label="Skip intro"
-      >跳过</button>
-    </div>
+  const overlayStyle = {
+    position: 'fixed',
+    inset: 0,
+    background: '#0b0b0c',
+    zIndex: 9999,
+    opacity: fade ? 0 : 1,
+    transition: 'opacity .4s ease'
+  }
+  const rootStyle = { width: '100%', height: '100%' }
+  const btnStyle = {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    zIndex: 10000,
+    background: 'rgba(0,0,0,.5)',
+    color: '#fff',
+    border: '1px solid #555',
+    borderRadius: 6,
+    padding: '6px 10px',
+    cursor: 'pointer'
+  }
+  return React.createElement(
+    'div',
+    { onClick: close, style: overlayStyle },
+    [
+      React.createElement('div', { key: 'root', ref: rootRef, onClick: function (e) { e.stopPropagation() }, style: rootStyle }),
+      React.createElement('button', { key: 'btn', onClick: function (e) { e.stopPropagation(); close() }, style: btnStyle, 'aria-label': 'Skip intro' }, '跳过')
+    ]
   )
 }
