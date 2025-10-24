@@ -75,3 +75,7 @@
     "email": "tlyong1992@hotmail.com"
   }
 }
+"engines": {
+  "node": "20.x",
+  "npm": "10.x"
+}
