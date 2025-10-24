@@ -15,8 +15,10 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  */
 export const getGlobalLayoutByTheme = (themeQuery) => {
   const layout = getLayoutNameByPath(-1)
-  if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+  // Fallback to default theme if invalid
+  const safeTheme = THEMES?.includes(themeQuery) ? themeQuery : BLOG.THEME
+  if (safeTheme !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${safeTheme}`).then(m => m[layout]), { ssr: true })
   } else {
     return ThemeComponents[layout]
   }
@@ -29,20 +31,22 @@ export const getGlobalLayoutByTheme = (themeQuery) => {
  * @returns
  */
 export const getLayoutByTheme = ({ router, theme }) => {
-  const themeQuery = getQueryParam(router.asPath, 'theme') || theme
+  const requested = getQueryParam(router.asPath, 'theme') || theme
   const layoutName = getLayoutNameByPath(router.pathname)
+  // Ensure the requested theme exists; otherwise fallback to default
+  const safeTheme = THEMES?.includes(requested) ? requested : BLOG.THEME
 
-  if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => {
+  if (safeTheme !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${safeTheme}`).then(m => {
       setTimeout(() => {
         checkThemeDOM()
-      }, 500);
+      }, 500)
       return m[layoutName]
     }), { ssr: true })
   } else {
     setTimeout(() => {
       checkThemeDOM()
-    }, 100);
+    }, 100)
     return ThemeComponents[layoutName]
   }
 }
