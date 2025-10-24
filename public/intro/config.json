@@ -1,0 +1,15 @@
+{
+  "head": {
+    "title": "Intro",
+    "description": "Intro Animation",
+    "favicon": "favicon.ico"
+  },
+  "intro": {
+    "title": "Welcome",
+    "subtitle": "",
+    "enter": "enter",
+    "supportAuthor": false,
+    "background": true
+  }
+}
+

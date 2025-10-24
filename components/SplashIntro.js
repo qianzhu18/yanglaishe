@@ -10,12 +10,28 @@ export default function SplashIntro() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const enabled = process.env.NEXT_PUBLIC_INTRO_ENABLE !== 'false'
     const once = process.env.NEXT_PUBLIC_INTRO_ONCE !== 'false'
-    if (!enabled) return
     if (once && window.sessionStorage.getItem(INTRO_ONCE_KEY) === '1') return
 
-    setShow(true)
+    // read config.json to decide whether to show
+    let introEnabled = true
+    let cfg = null
+    const loadConfig = async () => {
+      try {
+        const res = await fetch('/intro/config.json', { cache: 'no-store' })
+        if (res.ok) cfg = await res.json()
+      } catch (e) {}
+      if (cfg && cfg.intro && cfg.intro.background === false) return false
+      // env override
+      if (process.env.NEXT_PUBLIC_INTRO_ENABLE === 'false') return false
+      return true
+    }
+
+    loadConfig().then((ok) => {
+      introEnabled = ok !== false
+      if (!introEnabled) return
+
+      setShow(true)
 
     // Prevent background scroll during intro
     const prevHtmlOverflow = document.documentElement.style.overflow
@@ -37,14 +53,17 @@ export default function SplashIntro() {
     // Build intro DOM (based on HomePage dist/index.html intro section)
     const container = rootRef.current
     if (container) {
+      const titleText = cfg?.intro?.title || 'Welcome'
+      const subText = cfg?.intro?.subtitle || ''
+      const enterText = cfg?.intro?.enter || 'enter'
       container.innerHTML = `
         <div class="content content-intro">
           <div class="content-inner">
             <canvas id="background"></canvas>
             <div class="wrap fade">
-              <h2 class="content-title">Welcome</h2>
-              <h3 class="content-subtitle" original-content=""></h3>
-              <a class="enter">enter</a>
+              <h2 class="content-title">${titleText}</h2>
+              <h3 class="content-subtitle" original-content="${subText}">&nbsp;</h3>
+              <a class="enter">${enterText}</a>
               <div class="arrow arrow-1"></div>
               <div class="arrow arrow-2"></div>
             </div>
