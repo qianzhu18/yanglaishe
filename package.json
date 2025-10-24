@@ -1,6 +1,7 @@
 {
   "name": "notion-next",
   "version": "4.2.2",
+  "engines": { "node": "20.x", "npm": "10.x" },
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -74,8 +75,4 @@
     "url": "https://github.com/tangly/NotionNext/issues",
     "email": "tlyong1992@hotmail.com"
   }
-}
-"engines": {
-  "node": "20.x",
-  "npm": "10.x"
 }
