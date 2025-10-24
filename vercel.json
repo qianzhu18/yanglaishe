@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
-  "installCommand": "npm i -g yarn@1.22.22 && yarn install --non-interactive",
-  "buildCommand": "yarn build",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
   "build": {
     "env": {
       "NODE_VERSION": "20"
