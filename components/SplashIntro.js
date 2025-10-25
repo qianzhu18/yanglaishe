@@ -185,6 +185,8 @@ export default function SplashIntro() {
     const duration = parseInt(process.env.NEXT_PUBLIC_INTRO_DURATION || '3500', 10)
     const timer = window.setTimeout(function () { close() }, duration)
     cleanup.current.clearTimer = function () { window.clearTimeout(timer) }
+    
+    })
 
     return () => {
       if (cleanup.current.clearTimer) cleanup.current.clearTimer()
