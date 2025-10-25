@@ -7,7 +7,10 @@ div(class="relative -mx-4 flex items-center justify-between py-3")
 		if main.navbar && main.navbar.links && main.navbar.links.length
 			nav#navbarCollapse(class="hidden lg:block")
 				ul(class="block space-y-1 lg:flex lg:space-y-0 2xl:ml-20")
+					// 允许某些导航项触发首页->第二页的切换（l.switch=true）
 					each l in main.navbar.links
 						li(class="group relative")
-							a(class="block w-full px-4 py-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-lg" href=l.href target=l.target)= l.text
-
+							if l.switch
+								a(class="block w-full px-4 py-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-lg" href=l.href target=l.target onclick="if(window.loadAll&&!window.loadAll.loaded){loadAll();return false;}")= l.text
+							else
+								a(class="block w-full px-4 py-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-lg" href=l.href target=l.target)= l.text
