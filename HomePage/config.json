@@ -44,6 +44,7 @@
 		"navbar": {
 			"logoText": "千逐的个人博客",
 			"links": [
+				{ "text": "作品", "href": "#work", "target": "_self", "switch": true },
 				{ "text": "🌈WaytoAGI知识库", "href": "https://www.waytoagi.com/zh", "target": "_blank" },
 				{ "text": "关于我", "href": "about/", "target": "_self" },
 				{ "text": "X主页", "href": "https://x.com/", "target": "_blank" }
