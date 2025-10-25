@@ -1,0 +1,19 @@
+.cards
+	.cards-grid
+		//- iterate cards from config
+		if main.cards && main.cards.length
+			each c in main.cards
+				.a-card
+					.a-thumb
+						img(src=c.img alt=c.title)
+					.a-body
+						.a-meta
+							span.a-time #{c.duration}
+						h3.a-title
+							a(href=c.href)= c.title
+						p.a-desc= c.desc
+						if c.tags && c.tags.length
+							.a-tags
+								each t in c.tags
+									span.a-tag #{t}
+

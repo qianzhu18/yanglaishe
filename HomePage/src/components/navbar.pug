@@ -1,0 +1,13 @@
+div(class="relative -mx-4 flex items-center justify-between py-3")
+	div(class="w-60 max-w-full px-4")
+		div(class="navbar-logo flex items-center w-full py-5 cursor-pointer")
+			img(src="https://www.notion.so/image/attachment%3A481ffdef-fdfd-4c0a-be47-8e493882346e%3A%E4%B8%AA%E4%BA%BA%E5%9B%BE%E7%89%87.jpg?table=collection&id=201e45c4-da1e-81d7-9e06-000b0ad45278&t=201e45c4-da1e-81d7-9e06-000b0ad45278" alt="千逐" class="mr-2 hidden md:inline-block" width="24" height="20" loading="eager" decoding="async" data-webp="true" data-avif="true")
+			span(class="text-black logo dark:text-white py-1.5 header-logo-text whitespace-nowrap font-semibold") #{main.navbar && main.navbar.logoText || '千逐的个人博客'}
+	div(class="flex items-center gap-4 justify-end pr-16 lg:pr-0")
+		if main.navbar && main.navbar.links && main.navbar.links.length
+			nav#navbarCollapse(class="hidden lg:block")
+				ul(class="block space-y-1 lg:flex lg:space-y-0 2xl:ml-20")
+					each l in main.navbar.links
+						li(class="group relative")
+							a(class="block w-full px-4 py-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-lg" href=l.href target=l.target)= l.text
+
