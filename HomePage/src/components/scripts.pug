@@ -5,6 +5,8 @@ script.
 	const getOriginalContent = selector => $(selector).getAttribute("original-content")
 	window.subtitle = getOriginalContent(".content-subtitle")
 	window.signature = getOriginalContent("#signature")
+	// 动态内容数据：由 Pug 注入，供第二页脚本渲染卡片
+	window.cardsData = !{JSON.stringify(main.cards || [])}
 	window.config = {
 		SIM_RESOLUTION: 128,
 		DYE_RESOLUTION: 1024,
