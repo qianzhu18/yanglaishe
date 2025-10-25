@@ -24,8 +24,12 @@
 						span(data-translate=`${third.text}`) #{third.text}
 
 				li
-					a(href=`${fourth.href}` aria-label=`${fourth.text}` target="_blank")
-						i(class=`icon icon-${fourth.icon}`)
-						span(data-translate=`${fourth.text}`) #{fourth.text}
+						a(href=`${fourth.href}` aria-label=`${fourth.text}` target="_blank")
+							i(class=`icon icon-${fourth.icon}`)
+							span(data-translate=`${fourth.text}`) #{fourth.text}
+
+			// 下方一列信息展示容器（team/join 悬浮提示专用）
+			.hover-info#hoverInfo
+				|
 
 	canvas.grid-background#gridCanvas
