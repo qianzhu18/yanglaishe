@@ -866,19 +866,27 @@ function getMoveDirection(startx, starty, endx, endy) {
 }
 
 function loadIntro() {
-	if (document[hiddenProperty] || loadIntro.loaded) {
-		return;
-	}
+    if (document[hiddenProperty] || loadIntro.loaded) {
+        return;
+    }
 
-	setTimeout(() => {
-		$(".wrap").classList.add("in");
-		setTimeout(() => {
-			$(".content-subtitle").innerHTML = `<span>${[...subtitle].join(
-				"</span><span>"
-			)}</span>`;
-		}, 270);
-	}, 0);
-	loadIntro.loaded = true;
+    setTimeout(() => {
+        $(".wrap").classList.add("in");
+        setTimeout(() => {
+            $(".content-subtitle").innerHTML = `<span>${[...subtitle].join(
+                "</span><span>"
+            )}</span>`;
+        }, 270);
+        // 尝试播放首页背景音乐（忽略浏览器自动播放限制异常）
+        try {
+            const audioEl = document.getElementById('bgAudio');
+            if (audioEl && audioEl.play) {
+                const p = audioEl.play();
+                if (p && p.catch) p.catch(() => {});
+            }
+        } catch (e) {}
+    }, 0);
+    loadIntro.loaded = true;
 }
 
 function switchPage() {
@@ -969,12 +977,17 @@ function loadMain() {
 }
 
 function loadAll() {
-	if (loadAll.loaded) {
-		return;
-	}
-	switchPage();
-	loadMain();
-	loadAll.loaded = true;
+    if (loadAll.loaded) {
+        return;
+    }
+    // 进入第二页时停止音乐
+    try {
+        const audioEl = document.getElementById('bgAudio');
+        if (audioEl) { audioEl.pause(); audioEl.currentTime = 0; }
+    } catch (e) {}
+    switchPage();
+    loadMain();
+    loadAll.loaded = true;
 }
 
 window.visibilityChangeEvent = hiddenProperty.replace(
