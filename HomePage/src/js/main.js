@@ -940,15 +940,15 @@ function switchPage() {
 }
 
 function loadMain() {
-	if (loadMain.loaded) {
-		return;
-	}
-	setTimeout(() => {
-		$(".card-inner").classList.add("in");
-		setTimeout(() => {
-			const canvas = document.getElementById("gridCanvas");
-			if (canvas) {
-				const gridAnimation = new GridAnimation(canvas, {
+    if (loadMain.loaded) {
+        return;
+    }
+    setTimeout(() => {
+        $(".card-inner").classList.add("in");
+        setTimeout(() => {
+            const canvas = document.getElementById("gridCanvas");
+            if (canvas) {
+                const gridAnimation = new GridAnimation(canvas, {
 					direction: "diagonal",
 					speed: isPhone ? 0.03 : 0.05,
 					borderColor: isPhone
@@ -969,17 +969,43 @@ function loadMain() {
 					touchSensitivity: isPhone ? 1.2 : 1.0, // 触摸灵敏度
 					vibrationEnabled: isPhone, // 是否启用震动反馈
 				});
-				gridAnimation.init();
-			}
-		}, 1100);
-	}, 400);
-	loadMain.loaded = true;
+                gridAnimation.init();
+            }
+
+            // Page-2 background music: loop play after user interaction
+            try {
+                if (!loadMain.page2AudioStarted) {
+                    let audio2 = document.getElementById('page2Audio');
+                    if (!audio2) {
+                        audio2 = document.createElement('audio');
+                        audio2.id = 'page2Audio';
+                        audio2.src = 'https://memosfile.qiangtu.com/audio/yanglaishe/%E6%B4%8B%E5%93%A5%E6%9D%A5%E7%8E%A9.mp3';
+                        audio2.loop = true;
+                        audio2.preload = 'auto';
+                        document.body.appendChild(audio2);
+                    }
+                    // stop first page audio to avoid overlap
+                    const a1 = document.getElementById('bgAudio');
+                    if (a1) { a1.pause(); a1.currentTime = 0; }
+                    const p = audio2.play();
+                    if (p && p.catch) p.catch(() => {});
+                    loadMain.page2AudioStarted = true;
+                }
+            } catch (e) {}
+        }, 1100);
+    }, 400);
+    loadMain.loaded = true;
 }
 
 function loadAll() {
     if (loadAll.loaded) {
         return;
     }
+    // Ensure first page audio is paused before switching
+    try {
+        const a1 = document.getElementById('bgAudio');
+        if (a1) { a1.pause(); a1.currentTime = 0; }
+    } catch (e) {}
     switchPage();
     loadMain();
     loadAll.loaded = true;
