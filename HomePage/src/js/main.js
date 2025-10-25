@@ -1038,28 +1038,58 @@ if (isPhone) {
 	);
 }
 
-// ===== Hover tooltips for team/join in second page =====
+// ===== Team/Join helper text: desktop hover + mobile tap, no flicker =====
 (function addHoverMessages(){
     const box = document.getElementById('hoverInfo');
     if(!box) return;
-    function attachMessage(selector, raw){
+    let active = null; // fixed by tap/click
+    let hideTimer = null;
+
+    function setBox(text){ box.textContent = text || ''; }
+    function toMultiline(text){ return text.split('，').join('\n'); }
+
+    function attach(selector, raw){
         try{
             const span = document.querySelector(`span[data-translate="${selector}"]`);
             if(!span) return;
             const anchor = span.closest('a');
             if(!anchor) return;
+            const message = selector === 'team' ? toMultiline(raw) : raw;
+
             const show = () => {
-                // 将中文逗号拆成多行，按一列展示
-                const text = selector === 'team' ? raw.split('，').join('\n') : raw;
-                box.textContent = text;
+                if (active && active !== anchor) return; // other fixed message
+                clearTimeout(hideTimer);
+                setBox(message);
             };
-            const hide = () => { box.textContent = ''; };
-            anchor.addEventListener('mouseenter', show);
-            anchor.addEventListener('mouseleave', hide);
+            const hide = () => {
+                if (active === anchor) return; // keep fixed
+                clearTimeout(hideTimer);
+                hideTimer = setTimeout(() => setBox(''), 120);
+            };
+
+            anchor.addEventListener('pointerenter', show);
+            anchor.addEventListener('pointerleave', hide);
             anchor.addEventListener('focus', show);
             anchor.addEventListener('blur', hide);
+
+            const toggleFixed = (e) => {
+                if (e) e.preventDefault();
+                clearTimeout(hideTimer);
+                if (active === anchor) { active = null; setBox(''); }
+                else { active = anchor; setBox(message); }
+            };
+            anchor.addEventListener('click', toggleFixed);
+            anchor.addEventListener('touchstart', toggleFixed, { passive: false });
+            anchor.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') toggleFixed(e); });
+
+            document.addEventListener('click', (e) => {
+                if (!active) return;
+                if (e.target && active.contains && active.contains(e.target)) return;
+                active = null; setBox('');
+            });
         }catch(e){}
     }
-    attachMessage('team','汪老师，奥丁，千逐，恭亲王，骏骏，王妈，刘豪...');
-    attachMessage('join','发布5条洋来作品，即可添加上述人员申请加入');
+
+    attach('team','汪老师，奥丁，千逐，恭亲王，骏骏，王妈，刘豪...');
+    attach('join','发布5条洋来作品，即可添加上述人员申请加入');
 })();
