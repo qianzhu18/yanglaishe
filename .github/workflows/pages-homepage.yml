@@ -25,11 +25,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: |
           cd HomePage
-          npm ci --no-fund --no-audit
+          npm install --no-fund --no-audit
 
       - name: Build
         run: |
@@ -51,4 +52,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
