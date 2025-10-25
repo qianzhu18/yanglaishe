@@ -31,12 +31,12 @@
                 "text": "works"
             },
             "third": {
-                "href": "#",
+                "href": "javascript:void(0)",
                 "icon": "email",
                 "text": "team"
             },
             "fourth": {
-                "href": "#",
+                "href": "javascript:void(0)",
                 "icon": "github",
                 "text": "join"
             }
