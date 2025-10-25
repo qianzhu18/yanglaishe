@@ -13,6 +13,8 @@
 					.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 			h2.content-title #{intro.title}
 			h3.content-subtitle(original-content=`${intro.subtitle}`) &nbsp;
+			// 背景音频：首页自动循环播放，进入下一页停止（见《第二页优化.md》）
+			audio#bgAudio(autoplay loop preload="auto" src="https://memosfile.qiangtu.com/audio/yanglaishe/%E6%B4%8B%E5%93%A5%E6%9D%A5%E7%8E%A9.mp3")
 			a.enter #{intro.enter}
 			.arrow.arrow-1
 			.arrow.arrow-2
