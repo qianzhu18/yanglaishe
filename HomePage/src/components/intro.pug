@@ -1,5 +1,7 @@
 .content.content-intro
 	.content-inner
+		// 顶部导航在首屏也显示，便于通过导航切换到第二页
+		include navbar.pug
 		if intro.background
 			canvas#background
 		.wrap.fade
