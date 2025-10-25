@@ -18,6 +18,8 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
 // 各种扩展插件 这个要阻塞引入
 import ExternalPlugins from '@/components/ExternalPlugins'
 import { THEME } from '@/blog.config'
+import dynamic from 'next/dynamic'
+const SplashIntro = dynamic(() => import('@/components/SplashIntro'), { ssr: false })
 
 const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
@@ -39,6 +41,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <GlobalContextProvider {...pageProps}>
+      <SplashIntro />
       <GLayout {...pageProps}>
         <Component {...pageProps} />
       </GLayout>
