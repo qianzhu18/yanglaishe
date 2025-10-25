@@ -889,6 +889,39 @@ function loadIntro() {
     loadIntro.loaded = true;
 }
 
+// ===== 第二页：动态渲染作品卡片 =====
+function renderCards(cards = []) {
+    try {
+        const grid = document.getElementById('cardsGrid');
+        if (!grid || !Array.isArray(cards)) return;
+        // 清空一次，避免重复渲染
+        grid.innerHTML = '';
+        const html = cards.map(c => `
+            <div class="relative flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+              <div class="relative mx-4 mt-4 h-80 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
+                <img src="${c.img || ''}" alt="${c.title || ''}">
+              </div>
+              <div class="p-6 text-center">
+                <h4 class="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">${c.title || ''}</h4>
+                <p class="block bg-gradient-to-tr from-pink-600 to-pink-400 bg-clip-text font-sans text-base font-medium leading-relaxed text-transparent antialiased">${c.desc || ''}</p>
+              </div>
+              <div class="flex justify-center gap-7 p-6 pt-2">
+                <a href="${c.href || '#'}" class="block bg-gradient-to-tr from-blue-600 to-blue-400 bg-clip-text font-sans text-xl font-normal leading-relaxed text-transparent antialiased">
+                  <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="${c.href || '#'}" class="block bg-gradient-to-tr from-light-blue-600 to-light-blue-400 bg-clip-text font-sans text-xl font-normal leading-relaxed text-transparent antialiased">
+                  <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="${c.href || '#'}" class="block bg-gradient-to-tr from-purple-600 to-purple-400 bg-clip-text font-sans text-xl font-normal leading-relaxed text-transparent antialiased">
+                  <i class="fab fa-instagram" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+        `).join('');
+        grid.insertAdjacentHTML('beforeend', html);
+    } catch (e) {}
+}
+
 function switchPage() {
 	if (switchPage.switched) {
 		return;
@@ -940,15 +973,15 @@ function switchPage() {
 }
 
 function loadMain() {
-	if (loadMain.loaded) {
-		return;
-	}
-	setTimeout(() => {
-		$(".card-inner").classList.add("in");
-		setTimeout(() => {
-			const canvas = document.getElementById("gridCanvas");
-			if (canvas) {
-				const gridAnimation = new GridAnimation(canvas, {
+    if (loadMain.loaded) {
+        return;
+    }
+    setTimeout(() => {
+        $(".card-inner").classList.add("in");
+        setTimeout(() => {
+            const canvas = document.getElementById("gridCanvas");
+            if (canvas) {
+                const gridAnimation = new GridAnimation(canvas, {
 					direction: "diagonal",
 					speed: isPhone ? 0.03 : 0.05,
 					borderColor: isPhone
@@ -969,11 +1002,16 @@ function loadMain() {
 					touchSensitivity: isPhone ? 1.2 : 1.0, // 触摸灵敏度
 					vibrationEnabled: isPhone, // 是否启用震动反馈
 				});
-				gridAnimation.init();
-			}
-		}, 1100);
-	}, 400);
-	loadMain.loaded = true;
+                gridAnimation.init();
+            }
+            // 动态渲染作品卡片（第二页）
+            if (!loadMain.cardsRendered) {
+                renderCards(window.cardsData || []);
+                loadMain.cardsRendered = true;
+            }
+        }, 1100);
+    }, 400);
+    loadMain.loaded = true;
 }
 
 function loadAll() {
