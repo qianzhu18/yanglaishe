@@ -980,11 +980,6 @@ function loadAll() {
     if (loadAll.loaded) {
         return;
     }
-    // 进入第二页时停止音乐
-    try {
-        const audioEl = document.getElementById('bgAudio');
-        if (audioEl) { audioEl.pause(); audioEl.currentTime = 0; }
-    } catch (e) {}
     switchPage();
     loadMain();
     loadAll.loaded = true;

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>洋来社 · Younger World</title>
+  <meta name="description" content="洋来社 · 用音乐、影像与技术把快乐做成作品" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0b0c;--grid:#1a1a1c;--soft:#d9d9d9;--muted:#a7a7a7;--brand:#88f0c0;--blur:18px;--radius:18px;--shadow:0 8px 30px rgba(0,0,0,.35)}*{box-sizing:border-box}html,body{height:100%}body{margin:0;color:#eee;background:radial-gradient(1000px 800px at 70% 20%, rgba(255,255,255,.04), transparent 60%),radial-gradient(900px 900px at 15% 60%, rgba(255,255,255,.03), transparent 55%),var(--bg);font-family:"Nunito",system-ui,-apple-system,Segoe UI,Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6;overflow-x:hidden}
+    .grid{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:60px 60px,60px 60px;mask-image:radial-gradient(1000px 1000px at 50% 40%, rgba(0,0,0,.9), rgba(0,0,0,0.35) 70%, transparent 100%)}
+    .sq{position:fixed;width:26px;height:26px;background:var(--brand);box-shadow:0 0 40px 8px rgba(136,240,192,.25);filter:blur(.2px);opacity:.85;border-radius:6px;animation:float 8s linear infinite}.sq.s1{top:18%;left:8%;animation-duration:12s}.sq.s2{top:28%;right:10%;animation-duration:10s}.sq.s3{bottom:12%;left:42%;background:#fff;opacity:.7;animation-duration:9s}@keyframes float{from{transform:translateY(0)}50%{transform:translateY(-14px)}to{transform:translateY(0)}}
+    header{height:88vh;display:grid;place-items:center;text-align:center}
+    header .logo{width:108px;height:108px;display:grid;place-items:center;margin:0 auto 14px;border-radius:50%;background:linear-gradient(135deg,rgba(136,240,192,.8),rgba(255,255,255,.2));color:#0b0b0c;font-weight:900;box-shadow:var(--shadow);backdrop-filter:blur(var(--blur))}
+    h1{margin:10px 0 6px;font-size:56px;letter-spacing:.4px}
+    .tag{color:var(--muted)}
+    .quick{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .q{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);text-decoration:none;color:#eee}
+    .q:hover{background:rgba(255,255,255,.12)}
+    .section{max-width:980px;margin:0 auto;padding:40px 20px}
+    .kicker{letter-spacing:.12em;font-size:13px;color:var(--muted);text-transform:uppercase}
+    h2{margin:4px 0 12px;font-size:28px}
+    .muted{color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:12px}
+    .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px}
+    .thumb{height:118px;border-radius:12px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:var(--soft);font-weight:900}
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;margin:16px 0}
+    form .full{grid-column:1 / -1}
+    input,textarea,button{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);color:#eee;outline:none}
+    textarea{min-height:110px;resize:vertical}
+    button{cursor:pointer;background:linear-gradient(135deg, rgba(136,240,192,.9), rgba(255,255,255,.3));color:#0b0b0c;font-weight:900}
+    button:hover{filter:brightness(1.06)}
+    footer{padding:60px 0 80px;text-align:center;color:var(--muted)}
+    .anchor{scroll-margin-top:80px}
+    @media (max-width:640px){h1{font-size:40px}.logo{width:92px;height:92px}}
+  </style>
+</head>
+<body>
+  <div class="grid" aria-hidden="true"></div>
+  <b class="sq s1" aria-hidden="true"></b>
+  <b class="sq s2" aria-hidden="true"></b>
+  <b class="sq s3" aria-hidden="true"></b>
+
+  <header>
+    <div>
+      <div class="logo">洋来</div>
+      <h1>洋来社</h1>
+      <div class="tag">Welcome to younger world</div>
+      <nav class="quick" aria-label="主导航">
+        <a class="q" href="#about"><i>🙂</i><span>关于我们</span></a>
+        <a class="q" href="#works"><i>🎬</i><span>往期作品</span></a>
+        <a class="q" href="#join"><i>✉️</i><span>加入方式</span></a>
+        <a class="q" href="#team"><i>👥</i><span>核心成员</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="about" class="section anchor">
+    <div class="kicker">About</div>
+    <h2>我们做什么？</h2>
+    <p>洋来社是一个把<strong>音乐、影像与人工智能</strong>揉在一起的创作社群：用 AIGC 与传统后期流程，表达真诚的快乐与幽默感。</p>
+  </section>
+
+  <section id="works" class="section anchor">
+    <div class="kicker">Works</div>
+    <h2>往期作品沉淀</h2>
+    <div class="cards" role="list">
+      <article class="card" role="listitem"><div class="thumb">MV</div><h4>洋来 MV</h4><p class="muted">音乐与视觉的合奏，适合舞台感/故事感的表达。</p></article>
+      <article class="card" role="listitem"><div class="thumb">Show</div><h4>洋来脱口秀</h4><p class="muted">用段子解构技术与欲望的反差。</p></article>
+      <article class="card" role="listitem"><div class="thumb">Video</div><h4>洋来视频</h4><p class="muted">AI 图生视频 + 神经 TTS + 唇形同步 + 后期渲染。</p></article>
+      <article class="card" role="listitem"><div class="thumb">Story</div><h4>洋哥故事生成</h4><p class="muted">生成式叙事实验场。</p></article>
+    </div>
+  </section>
+
+  <section id="join" class="section anchor">
+    <div class="kicker">Join</div>
+    <h2>加入方式</h2>
+    <form onsubmit="event.preventDefault(); alert('已收到！我们会尽快联系你✉️');">
+      <input type="text" placeholder="你的名字" required>
+      <input type="email" placeholder="联系邮箱" required>
+      <input class="full" type="text" placeholder="擅长方向（音乐/剪辑/建模/前端…）">
+      <textarea class="full" placeholder="想参与的方向 / 代表作链接（可选）"></textarea>
+      <button class="full" type="submit">提交加入意向</button>
+    </form>
+  </section>
+
+  <section id="team" class="section anchor">
+    <div class="kicker">Team</div>
+    <h2>核心成员</h2>
+    <p class="muted">我们是一群热爱表达的人：音乐人、剪辑师、开发者、设计师…</p>
+  </section>
+
+  <footer>© 洋来社 · Younger World</footer>
+</body>
+</html>
+
