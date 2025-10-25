@@ -1,7 +1,7 @@
 .cards
 	// 采用 Material Tailwind 风格网格，6 张卡片铺满页面（参见《第二页优化.md》）
 	.container.mx-auto.px-4.py-8
-		.grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3.gap-8.justify-items-center
+		.grid(class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center")
 			if main.cards && main.cards.length
 				each c in main.cards
 					.relative.flex.w-96.flex-col.rounded-xl.bg-white.bg-clip-border.text-gray-700.shadow-md
