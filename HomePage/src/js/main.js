@@ -1037,3 +1037,45 @@ if (isPhone) {
 		{ passive: true }
 	);
 }
+
+// ===== Hover tooltips for team/join in second page =====
+(function addHoverTooltips(){
+    function attachTooltip(selector, text){
+        try{
+            const span = document.querySelector(`span[data-translate="${selector}"]`);
+            if(!span) return;
+            const anchor = span.closest('a');
+            if(!anchor) return;
+            let tip;
+            function show(){
+                tip = document.createElement('div');
+                tip.textContent = text;
+                tip.style.position = 'fixed';
+                tip.style.zIndex = '1000';
+                tip.style.maxWidth = '260px';
+                tip.style.padding = '10px 12px';
+                tip.style.borderRadius = '8px';
+                tip.style.background = 'rgba(0,0,0,0.75)';
+                tip.style.color = '#fff';
+                tip.style.fontSize = '12px';
+                tip.style.pointerEvents = 'none';
+                const rect = anchor.getBoundingClientRect();
+                const top = Math.max(8, rect.top - 12);
+                const left = Math.min(window.innerWidth - 280, Math.max(8, rect.left));
+                tip.style.top = `${top}px`;
+                tip.style.left = `${left}px`;
+                document.body.appendChild(tip);
+            }
+            function hide(){ if(tip && tip.parentNode){ tip.parentNode.removeChild(tip); tip=null; } }
+            anchor.addEventListener('mouseenter', show);
+            anchor.addEventListener('mouseleave', hide);
+            // also support focus
+            anchor.addEventListener('focus', show);
+            anchor.addEventListener('blur', hide);
+        }catch(e){}
+    }
+    // Team members list
+    attachTooltip('team','汪老师，奥丁，千逐，恭亲王，骏骏，王妈，刘豪...');
+    // Join hint
+    attachTooltip('join','发布5条洋来作品，即可添加上述人员申请加入');
+})();

@@ -19,27 +19,27 @@
             "height": "100",
             "width": "100"
         },
-		"ul": {
-			"first": {
-				"href": "blog/",
-				"icon": "bokeyuan",
-				"text": "about"
-			},
-			"second": {
-				"href": "about/",
-				"icon": "xiaolian",
-				"text": "works"
-			},
-			"third": {
-				"href": "mailto:hi@simonaking.com",
-				"icon": "email",
-				"text": "team"
-			},
-			"fourth": {
-				"href": "https://github.com/SimonAKing",
-				"icon": "github",
-				"text": "join"
-			}
+        "ul": {
+            "first": {
+                "href": "about/",
+                "icon": "bokeyuan",
+                "text": "about"
+            },
+            "second": {
+                "href": "https://blog.qianzhu.me/article/297e45c4-da1e-802a-a310-d99f73f6c6df",
+                "icon": "xiaolian",
+                "text": "works"
+            },
+            "third": {
+                "href": "#",
+                "icon": "email",
+                "text": "team"
+            },
+            "fourth": {
+                "href": "#",
+                "icon": "github",
+                "text": "join"
+            }
 		}
 	}
 }
