@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>洋来社 · 单页介绍（Matrix Style）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#000;--grid:#0b1a0b;--neon:#00ff8a;--neon-dim:#00c06a;--text:#c9ffd8}
+  *{box-sizing:border-box}html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Fira Code",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;letter-spacing:.2px;overflow-x:hidden}
+  #matrix{position:fixed;inset:0;z-index:-2;background:#000}
+  .grid{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);background-size:60px 60px,60px 60px;mask-image:radial-gradient(1000px 800px at 50% 40%, rgba(0,0,0,.86), rgba(0,0,0,.15) 60%, transparent 85%)}
+  .shell{width:min(1000px,92vw);margin:0 auto;padding:18vh 0 10vh;position:relative}
+  .panel{border:1px solid rgba(0,255,138,.3);background:linear-gradient(180deg, rgba(0,20,10,.55), rgba(0,0,0,.55));backdrop-filter:blur(6px);border-radius:14px;box-shadow:0 0 0 1px rgba(0,255,138,.08),0 12px 48px rgba(0,0,0,.8),inset 0 0 80px rgba(0,255,138,.05);padding:32px}
+  h1{margin:0 0 8px;font-weight:700;font-size:40px;color:var(--neon);text-shadow:0 0 12px rgba(0,255,138,.5);letter-spacing:2px}
+  .sub{color:#8fe9b7;margin:0 0 22px}
+  h2{margin:26px 0 10px;color:var(--neon);font-size:20px;font-weight:700}
+  p{margin:10px 0;line-height:1.9}
+  .dot{color:var(--neon-dim)}
+  .divider{height:1px;background:linear-gradient(90deg, transparent, rgba(0,255,138,.35), transparent);margin:18px 0}
+  .prompt{color:#77ffbb;margin-bottom:8px;opacity:.9}
+  .blink::after{content:"▌";margin-left:6px;animation:blink 1s steps(1,end) infinite;color:var(--neon)}
+  @keyframes blink{50%{opacity:0}}
+  blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--neon);background:rgba(0,255,138,.06);color:#dbffe9}
+  @media (max-width:640px){.shell{padding-top:14vh}h1{font-size:32px}}
+</style>
+</head>
+<body>
+<canvas id="matrix" aria-hidden="true"></canvas>
+<div class="grid" aria-hidden="true"></div>
+
+<main class="shell">
+  <section class="panel" role="document" aria-label="洋来社单页介绍">
+    <div class="prompt">/usr/yanglai$ cat intro.txt <span class="blink"></span></div>
+    <h1>洋来社 <span class="dot">::</span> Younger World</h1>
+    <p class="sub">用音乐、影像与代码，把快乐变成可以复制的作品。</p>
+    <div class="divider"></div>
+
+    <h2>洋来社是什么？</h2>
+    <p>洋来社是一个以「创作」为核心的开放型社群。我们把 <strong>音乐</strong>、<strong>影像</strong>与<strong>技术</strong>接到同一条“总线”，用极简高效的生产管线把灵感快速落地：从脚本到合成声音、从图像到视频、从剪辑到发布——像一次次 <em>编译</em>，把情绪与故事打包输出。</p>
+    <p>我们信奉“低门槛高协作”的工作方式：一段旋律、一个笑点或一段代码，都能触发一次全链路创作。作品既可以是 MV、短片、脱口秀，也可以是交互网页与装置。形式服务于表达，表达服务于快乐。</p>
+
+    <h2>我们的理念</h2>
+    <p><strong>1) 技术为情绪服务。</strong> AIGC、TTS、唇形同步、合成渲染……所有技术只为增强叙事张力与情绪质感。</p>
+    <p><strong>2) 快速迭代，公地共享。</strong> 以最小可作品（MVP）起步，快速上线、快速复盘、快速升级；模版、脚本、音色、镜头语言与代码片段在社内共享。</p>
+    <p><strong>3) 真诚与幽默。</strong> 机械的炫酷不等于好看。我们追求“轻松而锋利”的表达——以真诚为底、以幽默为刃。</p>
+
+    <h2>核心文化</h2>
+    <p><strong>■ 角色宇宙：</strong> 围绕“洋哥”等 IP 搭建持续进化的角色与世界观。</p>
+    <p><strong>■ 模块化协作：</strong> 把创作拆成可插拔模块：脚本、旁白、配乐、分镜、剪辑、调色、发布。</p>
+    <p><strong>■ 数据驱动的创作直觉：</strong> 用数据校准直觉，但最终仍由直觉拍板。</p>
+    <p><strong>■ 开放而克制：</strong> 拥抱最新工具与模型，但保持克制。</p>
+    <blockquote>“我们不是在堆特效，我们在写一封能被看见的情书。”</blockquote>
+
+    <h2>我们相信</h2>
+    <p>当创意被写成“可复用的流程”，当不同专长的人因轻量的接口而并行协作，作品就能以指数级速度生长。洋来社希望成为这样一个「快乐的编译器」：把分布式的火花，编译成一次次可分享的浪潮。</p>
+
+    <div class="divider"></div>
+    <p style="opacity:.8">end of file — press <kbd>CTRL</kbd> + <kbd>C</kbd> to exit</p>
+  </section>
+</main>
+
+<script>
+(function(){
+  const c = document.getElementById('matrix');
+  const ctx = c.getContext('2d');
+  let W, H, columns, drops;
+  const glyphs = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$@#&*+-=';
+  function resize(){
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+    const fontSize = 16;
+    columns = Math.floor(W / fontSize);
+    drops = Array(columns).fill(0).map(()=>Math.floor(Math.random()*H/fontSize));
+    ctx.font = fontSize + "px 'Fira Code', monospace";
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  function draw(){
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.fillRect(0, 0, W, H);
+    for (let i=0; i<columns; i++){
+      const char = glyphs[Math.floor(Math.random()*glyphs.length)];
+      const x = i * 16; const y = drops[i] * 16;
+      ctx.fillStyle = (Math.random() < 0.08) ? '#00ff8a' : '#00c06a';
+      ctx.fillText(char, x, y);
+      if (y > H && Math.random() > 0.975) drops[i] = 0; else drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
+

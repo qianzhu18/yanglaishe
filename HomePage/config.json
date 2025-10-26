@@ -1,0 +1,45 @@
+{
+    "head": {
+        "title": "洋来社",
+        "description": "Author:SimonAKing,Category:Personal Blog",
+        "favicon": "https://youke1.picui.cn/s1/2025/10/25/68fc88fb412a8.jpg"
+    },
+    "intro": {
+        "title": "洋来社",
+        "subtitle": "Welcome to younger world",
+        "enter": "enter",
+        "supportAuthor": false,
+        "background": true
+    },
+    "main": {
+        "name": "洋来社",
+        "signature": "Welcome to younger world",
+        "avatar": {
+            "link": "https://youke1.picui.cn/s1/2025/10/25/68fc88fb412a8.jpg",
+            "height": "100",
+            "width": "100"
+        },
+        "ul": {
+            "first": {
+                "href": "about/",
+                "icon": "bokeyuan",
+                "text": "about"
+            },
+            "second": {
+                "href": "https://blog.qianzhu.me/article/297e45c4-da1e-802a-a310-d99f73f6c6df",
+                "icon": "xiaolian",
+                "text": "works"
+            },
+            "third": {
+                "href": "javascript:void(0)",
+                "icon": "email",
+                "text": "team"
+            },
+            "fourth": {
+                "href": "javascript:void(0)",
+                "icon": "github",
+                "text": "join"
+            }
+		}
+	}
+}
