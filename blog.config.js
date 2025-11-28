@@ -35,7 +35,7 @@ const BLOG = {
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://youke1.picui.cn/s1/2025/10/25/68fc88fb412a8.jpg', // blog favicon 配置
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://imagehost.qianzhu.online/api/rfile/洋来.jpg', // blog favicon 配置
 
   RANDOM_IMAGE_URL: process.env.NEXT_PUBLIC_RANDOM_IMAGE_URL || '', // 随机图片API,如果未配置下面的关键字，主页封面，头像，文章封面图都会被替换为随机图片
   RANDOM_IMAGE_REPLACE_TEXT: process.env.NEXT_PUBLIC_RANDOM_IMAGE_NOT_REPLACE_TEXT || 'images.unsplash.com', // 触发替换图片的 url 关键字(多个支持用英文逗号分开)，只有图片地址中包含此关键字才会替换为上方随机图片url
@@ -221,7 +221,7 @@ const BLOG = {
       name: '洋哥来玩',
       artist: '洋来社',
       url: 'https://memosfile.qiangtu.com/audio/yanglaishe/%E6%B4%8B%E5%93%A5%E6%9D%A5%E7%8E%A9.mp3',
-      cover: 'https://youke1.picui.cn/s1/2025/10/25/68fc88fb412a8.jpg'
+      cover: 'https://imagehost.qianzhu.online/api/rfile/洋来.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
